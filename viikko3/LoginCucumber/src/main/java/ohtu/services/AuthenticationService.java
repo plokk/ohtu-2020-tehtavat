@@ -41,6 +41,16 @@ public class AuthenticationService {
     private boolean invalid(String username, String password) {
         // validity check of username and password
 
+        String usernamePattern = "^[a-z]{3,}$";
+        if (!username.matches(usernamePattern)) {
+            return true;
+        }
+
+        String passwordPattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        if (!password.matches(passwordPattern)) {
+            return true;
+        }
+
         return false;
     }
 }
