@@ -102,6 +102,19 @@ public class Stepdefs {
         pageHasContent("password and password confirmation do not match");
     }
 
+    @Given("user with username {string} with password {string} is successfully created")
+    public void userWithUsernameWithPasswordIsSuccessfullyCreated(String username, String password) {
+        commandNewUserIsSelected();
+        newUserWith(username, password, password);
+        logout();
+    }
+
+    @Given("user with username {string} and password {string} is tried to be created")
+    public void userWithUsernameWithPasswordIsTriedToBeCreated(String username, String password) {
+        commandNewUserIsSelected();
+        newUserWith(username, password, password);
+        backToHome();
+    }
 
     @After
     public void tearDown(){
@@ -134,5 +147,21 @@ public class Stepdefs {
         element.sendKeys(passwordConfirmation);
         element = driver.findElement(By.name("signup"));
         element.submit();  
+    }
+
+    private void logout() {
+        assertTrue(driver.getPageSource().contains("Welcome to Ohtu Application!"));
+        WebElement element = driver.findElement(By.linkText("continue to application mainpage"));
+        element.click();
+        element = driver.findElement(By.linkText("logout"));
+        element.click();
+        assertTrue(driver.getPageSource().contains("Ohtu App"));
+    }
+
+    private void backToHome() {
+        assertTrue(driver.getPageSource().contains("Create username and give password"));
+        WebElement element = driver.findElement(By.linkText("back to home"));
+        element.click();
+        assertTrue(driver.getPageSource().contains("Ohtu App"));
     }
 }
