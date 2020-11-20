@@ -77,4 +77,36 @@ public class KauppaTest {
 
         verify(pankki).tilisiirto(eq("pekka"), eq(42), eq("12345"), eq("33333-44455"), eq(7));
     }
+
+    @Test
+    public void ostoskoriNollautuu() {
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(1);
+        k.lisaaKoriin(1);
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(1);
+
+        k.tilimaksu("pekka", "12345");
+
+        verify(pankki).tilisiirto(eq("pekka"), eq(42), eq("12345"), eq("33333-44455"), eq(5));
+    }
+
+    @Test
+    public void uusiViitenumeroJokaiselleMaksutapahtumalle() {
+        when(viite.uusi())
+            .thenReturn(123)
+            .thenReturn(456);
+
+        k.lisaaKoriin(1);
+        k.tilimaksu("pekka", "12345");
+        
+        verify(pankki).tilisiirto(anyString(), eq(123), anyString(), anyString(), anyInt());
+
+        k.aloitaAsiointi();
+        k.lisaaKoriin(2);
+        k.tilimaksu("pekka", "12345");
+        
+        verify(pankki).tilisiirto(anyString(), eq(456), anyString(), anyString(), anyInt());
+    }
 }
