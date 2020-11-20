@@ -31,7 +31,7 @@ public class Kauppa {
 
     public void lisaaKoriin(int id) {
         if (varasto.saldo(id)>0) {
-            Tuote t = varasto.haeTuote(id);             
+            Tuote t = varasto.haeTuote(id);
             ostoskori.lisaa(t);
             varasto.otaVarastosta(t);
         }

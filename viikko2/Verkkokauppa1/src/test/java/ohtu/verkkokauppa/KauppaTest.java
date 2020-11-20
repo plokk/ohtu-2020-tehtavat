@@ -22,6 +22,7 @@ public class KauppaTest {
         when(viite.uusi()).thenReturn(42);
 
         varasto = mock(Varasto.class);
+
         when(varasto.saldo(1)).thenReturn(10);
         when(varasto.saldo(2)).thenReturn(10);
         when(varasto.haeTuote(1)).thenReturn(new Tuote(1, "maito", 5));
@@ -108,5 +109,13 @@ public class KauppaTest {
         k.tilimaksu("pekka", "12345");
         
         verify(pankki).tilisiirto(anyString(), eq(456), anyString(), anyString(), anyInt());
+    }
+
+    @Test
+    public void poistaKorista() {
+        k.lisaaKoriin(1);
+        verify(varasto, times(1)).otaVarastosta(any(Tuote.class));
+        k.poistaKorista(1);
+        verify(varasto, times(1)).palautaVarastoon(any(Tuote.class));
     }
 }
