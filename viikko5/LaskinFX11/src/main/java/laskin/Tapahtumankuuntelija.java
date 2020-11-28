@@ -29,7 +29,7 @@ public class Tapahtumankuuntelija implements EventHandler {
             Komento komento = this.komennot.get((Button)event.getTarget());
             komento.suorita();
             this.edellinen = komento;
-        } else {
+        } else if (this.edellinen != null) {
             this.edellinen.peru();
             this.edellinen = null;
         }

@@ -4,6 +4,10 @@ public class Sovelluslogiikka {
 
     private int tulos;
 
+    public void aseta(int luku) {
+        tulos = luku;
+    }
+
     public void plus(int luku) {
         tulos += luku;
     }
@@ -13,7 +17,7 @@ public class Sovelluslogiikka {
     }
 
     public void nollaa() {
-        tulos = 0;
+        aseta(0);
     }
 
     public int tulos() {

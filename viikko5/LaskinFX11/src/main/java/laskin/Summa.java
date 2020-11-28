@@ -9,7 +9,18 @@ public class Summa extends Komento {
     }
 
     @Override
+    public void peru() {
+        aseta(edellinenArvo);
+        sovellus.aseta(edellinenArvo);
+    }
+
+    @Override
     public void suorita() {
+        try {
+            edellinenArvo = Integer.parseInt(tuloskentta.getText());
+        } catch (Exception e) {
+        }
+
         int arvo = 0;
 
         try {
@@ -18,17 +29,6 @@ public class Summa extends Komento {
         }
 
         sovellus.plus(arvo);
-
-        int laskunTulos = sovellus.tulos();
-        
-        syotekentta.setText("");
-        tuloskentta.setText("" + laskunTulos);
-
-        if (laskunTulos==0) {
-            nollaa.disableProperty().set(true);
-        } else {
-            nollaa.disableProperty().set(false);
-        }
-        undo.disableProperty().set(false);
+        aseta(sovellus.tulos());
     }
 }

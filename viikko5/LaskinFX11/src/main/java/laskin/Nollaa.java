@@ -9,19 +9,19 @@ public class Nollaa extends Komento {
     }
 
     @Override
-    public void suorita() {
-        sovellus.nollaa();
+    public void peru() {
+        aseta(edellinenArvo);
+        sovellus.aseta(edellinenArvo);
+    }
 
-        int laskunTulos = sovellus.tulos();
-        
-        syotekentta.setText("");
-        tuloskentta.setText("" + laskunTulos);
-        
-        if (laskunTulos == 0) {
-            nollaa.disableProperty().set(true);
-        } else {
-            nollaa.disableProperty().set(false);
+    @Override
+    public void suorita() {
+        try {
+            edellinenArvo = Integer.parseInt(tuloskentta.getText());
+        } catch (Exception e) {
         }
-        undo.disableProperty().set(false);
+
+        sovellus.nollaa();
+        aseta(sovellus.tulos());
     }
 }
